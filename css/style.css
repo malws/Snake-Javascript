@@ -1,0 +1,28 @@
+#game {
+	width: 400px;
+	height: 400px;
+	background-image:url('../images/background.png');
+}
+
+.buttons {
+	position:absolute;
+	left: 145px;
+	width:100px;
+	height:30px;
+	z-index:5;
+} 
+
+#bstart {
+	top: 150px;
+}
+
+#bscores {
+	top: 200px;
+	display: none;
+}
+
+#name {
+	position:absolute;
+	left: 110px;
+	top: 100px;
+}

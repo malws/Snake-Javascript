@@ -4,7 +4,7 @@ canvas.id = "Canvas";
 var ctx = canvas.getContext("2d");
 canvas.width = 600;
 canvas.height = 600;
-document.body.appendChild(canvas);
+document.getElementById("game-screen").appendChild(canvas);
 
 // Background image
 var bgReady = false;
@@ -52,13 +52,7 @@ var snake = {
 
 var applesEaten;
 var board;
-board = new Array(20);
-	for (var i=0; i <20; i++) board[i] = new Array(20);
-	for (var i=0; i < 20; i++) {
-		for(var j = 0; j < 20; j++) {
-			board[i][j] = 0;
-		}
-	}
+
 // Handle keyboard controls
 var keysDown = {};
 
@@ -74,12 +68,30 @@ addEventListener("keydown", function (e) {
 }, false);
 
 var loop;
+var mines
 
 // Functions
+function init() {
+	board = new Array(20);
+	for (var i=0; i <20; i++) board[i] = new Array(20);
+	for (var i=0; i < 20; i++) {
+		for(var j = 0; j < 20; j++) {
+			board[i][j] = 0;
+		}
+	}
+	applesEaten = 0;
+	setSnake();
+	setApple();
+	loop = setInterval(main, snake.speed);
+	mines = setInterval(setMine, 30000);
+}
+
 function setSnake() {
 	board[10][0] = -1;
 	snake.x = 10;
 	snake.y = 0;
+	snake.tail = 0;
+	snake.direction = 0;
 	snake.speed = 200;
 };
 
@@ -128,6 +140,8 @@ function update () {
 					break;					
 					case -1:
 					clearInterval(loop);
+					clearInterval(mines);
+					end();
 					break;
 				}
 			}
@@ -191,11 +205,3 @@ var main = function () {
 	update();
 	render();
 };
-
-(function init() {
-	applesEaten = 0;
-	setSnake();
-	setApple();
-	loop = setInterval(main, snake.speed);
-	var mines = setInterval(setMine, 30000);
-})();
