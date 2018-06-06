@@ -27,6 +27,7 @@ var snake = {
 	"x":0,
 	"y":0,
 	"direction": 0,
+	"tail": 2,
 	"speed": 200
 }
 
@@ -56,15 +57,21 @@ addEventListener("keydown", function (e) {
 
 // Functions
 function setSnake() {
-	board[10][0] = -1;
+	board[10][0] = 2;
+	board[10][1] = 1;
+	board[10][2] = -1;
 	snake.x = 10;
-	snake.y = 0;
+	snake.y = 2;
 };
 
 function update () {
 	var foundHead = false;
 	for (var i=0; i < 20; i++) {
 		for(var j = 0; j < 20; j++) {
+			// Tail update
+			if(board[i][j] == snake.tail) board[i][j] = 0;
+			if((board[i][j] >= 1) && (board[i][j] < snake.tail)) board[i][j]++;
+			
 			// Head update
 			if(board[i][j] == -1  && !foundHead) {
 				foundHead = true;
@@ -73,9 +80,12 @@ function update () {
 					break;
 					case 0:
 					board[snake.x][snake.y] = -1;
-					board[i][j] = 0;
+					if(snake.tail > 0) board[i][j] = 1;
+					else board[i][j] = 0;
 					break;					
 					case -1:
+					clearInterval(loop);
+					applesEaten = -1000;
 					break;
 				}
 			}
@@ -90,7 +100,8 @@ function checkNext() {
         case 2: snake.y--; break;
         case 0: snake.y++; break;
 	}
-	if((snake.x == -1 || snake.y == -1) || (snake.x > 19 || snake.y > 19)) return -1;	
+	if((snake.x == -1 || snake.y == -1) || (snake.x > 19 || snake.y > 19)) return -1;
+	else if (board[snake.x][snake.y] > 0) return -1;	
 	else if (board[snake.x][snake.y] == -2) return 1;
 	else return 0;
 }
@@ -117,5 +128,5 @@ var main = function () {
 
 (function init() {
 	setSnake();
-	var loop = setInterval(main, 200);
+	var loop = setInterval(main, snake.speed);
 })();
