@@ -2,8 +2,8 @@
 var canvas = document.createElement("canvas");
 canvas.id = "Canvas";
 var ctx = canvas.getContext("2d");
-canvas.width = 600;
-canvas.height = 600;
+canvas.width = 400;
+canvas.height = 400;
 document.getElementById("game-screen").appendChild(canvas);
 
 // Background image

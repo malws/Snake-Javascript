@@ -9,17 +9,24 @@ function showScreen (active, inactive){
 		init();
 	}
 	if(inactive === 'high-scores') {
-			
+		var hsc = new Array();
+		if (typeof(Storage) !== "undefined") {
+			// Store
+			if (localStorage.getItem("hss") != null) {
+				hsc = JSON.parse(window.localStorage.getItem("hss"));
+				document.getElementById("scorestable").innerHTML = null;
+				for (var i = 0; i < hsc.length; i++) {
+					document.getElementById("scorestable").innerHTML += "<tr><td>" + hsc[i].name + "</td><td>" + hsc[i].score + "</td></tr>";
+				}	
+			}	
+		}
+		else {
+			document.getElementById("scores").innerHTML = "Sorry, your browser does not support Web Storage...";
+		} 		
 	}
 }
 
-function end () {
-	document.getElementById("bstart").style.display = "block";
-	document.getElementById("bscores").style.display = "block";
-	addScore();
-}
-
-var addScore = function(name, score) {
+function addScore (name, score) {
 	var hs = new Array();
 	var newscore = {"name": name, "score": applesEaten};
 	// Check browser support
@@ -44,4 +51,10 @@ var addScore = function(name, score) {
 	} else {
 		document.getElementById("scores").innerHTML = "Sorry, your browser does not support Web Storage...";
 	} 
+}
+function end () {
+	document.getElementById("bstart").style.display = "block";
+	document.getElementById("bscores").style.display = "block";
+	var name = document.getElementById("player").value;
+	addScore(name, applesEaten);
 }
