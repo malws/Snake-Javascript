@@ -2,8 +2,8 @@
 var canvas = document.createElement("canvas");
 canvas.id = "Canvas";
 var ctx = canvas.getContext("2d");
-canvas.width = 400;
-canvas.height = 400;
+canvas.width = 600;
+canvas.height = 600;
 document.body.appendChild(canvas);
 
 // Background image
@@ -30,6 +30,17 @@ appleImage.onload = function () {
 };
 appleImage.src = "images/apple.png";
 
+// Mine image
+var mineReady = false;
+var mineImage = new Image();
+mineImage.onload = function () {
+	mineReady = true;
+};
+mineImage.src = "images/mine.png";
+
+var mineX = 0;
+var mineY = 0;
+
 // Game objects
 var snake = {
 	"x":0,
@@ -48,7 +59,6 @@ board = new Array(20);
 			board[i][j] = 0;
 		}
 	}
-	
 // Handle keyboard controls
 var keysDown = {};
 
@@ -81,6 +91,15 @@ function setApple () {
 	else setApple();
 };
 
+function setMine () {
+	if (snake.tail > 397) return;
+	if(board[mineX][mineY] == -3) board[mineX][mineY] = 0;
+	mineX = Math.floor((Math.random() * 20));
+	mineY = Math.floor((Math.random() * 20));
+	if(board[mineX][mineY] == 0) board[mineX][mineY] = -3;
+	else setMine();
+};
+
 function update () {
 	var foundHead = false;
 	for (var i=0; i < 20; i++) {
@@ -97,6 +116,11 @@ function update () {
 					setApple();
 					applesEaten++;
 					snake.tail++;
+					if((snake.tail % 5) == 0) {
+						clearInterval(loop);
+						snake.speed /= 1.25;
+						loop = setInterval(main, snake.speed);
+					}
 					case 0:
 					board[snake.x][snake.y] = -1;
 					if(snake.tail > 0) board[i][j] = 1;
@@ -119,6 +143,10 @@ function checkNext() {
         case 0: snake.y++; break;
 	}
 	if((snake.x == -1 || snake.y == -1) || (snake.x > 19 || snake.y > 19)) return -1;
+	else if (board[snake.x][snake.y] == -3) {
+		board[mineX][mineY] = 0;
+		return -1;
+	}
 	else if (board[snake.x][snake.y] > 0) return -1;	
 	else if (board[snake.x][snake.y] == -2) {
 		board[snake.x][snake.y] = 0;
@@ -143,6 +171,11 @@ function render () {
 					ctx.drawImage(appleImage, i * 20, j * 20);
 				}
 			}
+			if(board[i][j] == -3) {
+				if (mineReady) {
+					ctx.drawImage(mineImage, i * 20, j * 20);
+				}
+			}
 		}
 	}	
 
@@ -164,4 +197,5 @@ var main = function () {
 	setSnake();
 	setApple();
 	loop = setInterval(main, snake.speed);
+	var mines = setInterval(setMine, 30000);
 })();
