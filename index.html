@@ -11,15 +11,14 @@
 			<div class="screen" id="game-screen"  class="active">
 				<p id="name"><label for="player">Name: </label>
 				<input type="text" id="player" value="snake" maxlength="9"></p>
-				<button class="buttons" id="bstart" onclick="showScreen('game-screen', 'game-screen')"><span>Start!</span></button>
-				<button class="buttons" id="bscores" onclick="showScreen('game-screen', 'high-scores')"><span>High scores</span></button>
+				<button id="bstart" onclick="showScreen('game-screen', 'game-screen')"><span>Start!</span></button>
+				<button id="bscores" onclick="showScreen('game-screen', 'high-scores')"><span>High scores</span></button>
 			</div>
 				
 			<div class="screen" id="high-scores" class="inactive" style="display:none">
-				<h2>High scores</h2>
 				<div id="scores">
-				<table id="scorestable"></table></div>
-				<button class="buttons" onclick="showScreen('high-scores', 'game-screen')"><span>Play again</span></button>
+				<table id="scorestable"><caption>Highs scores</caption><tbody id="tablecont"></tbody></table></div>
+				<button onclick="showScreen('high-scores', 'game-screen')"><span>Play again</span></button>
 			</div>
 			
 			<script src="js/misc.js"></script>

@@ -14,9 +14,9 @@ function showScreen (active, inactive){
 			// Store
 			if (localStorage.getItem("hss") != null) {
 				hsc = JSON.parse(window.localStorage.getItem("hss"));
-				document.getElementById("scorestable").innerHTML = null;
+				document.getElementById("tablecont").innerHTML = null;
 				for (var i = 0; i < hsc.length; i++) {
-					document.getElementById("scorestable").innerHTML += "<tr><td>" + hsc[i].name + "</td><td>" + hsc[i].score + "</td></tr>";
+					document.getElementById("tablecont").innerHTML += "<tr><td>" + hsc[i].name + "</td><td>" + hsc[i].score + "</td></tr>";
 				}	
 			}	
 		}

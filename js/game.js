@@ -57,16 +57,15 @@ var board;
 var userInput = false; // Flag that prevents multiple direction changes in one cycle (could occur if user not only press, but holds the key down)
 
 addEventListener("keydown", function (e) {
-	if(userInput) {
+	if (e.keyCode == 37 && userInput) { // Player press left
 		userInput = false;
-		if (e.keyCode == 37) { // Player press left
-			if(snake.direction > 0) snake.direction--;
-			else snake.direction = 3;
-		}
-		if (e.keyCode == 39) { // Player press right
-			if(snake.direction < 3) snake.direction++;
-			else snake.direction = 0;
-		}
+		if(snake.direction > 0) snake.direction--;
+		else snake.direction = 3;
+	}
+	if (e.keyCode == 39 && userInput) { // Player press right
+		userInput = false;
+		if(snake.direction < 3) snake.direction++;
+		else snake.direction = 0;
 	}	
 }, false);
 
@@ -204,7 +203,7 @@ function render () {
 
 	// Score
 	ctx.fillStyle = "rgb(250, 250, 250)";
-	ctx.font = "18px Helvetica";
+	ctx.font = "18px Verdana";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
 	ctx.fillText("Score: " + applesEaten, 10, 10);
