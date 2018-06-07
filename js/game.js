@@ -14,7 +14,15 @@ bgImage.onload = function () {
 };
 bgImage.src = "images/background.png";
 
-// Snake image
+// Snake head image
+var snakeHeadReady = false;
+var snakeHeadImage = new Image();
+snakeHeadImage.onload = function () {
+	snakeHeadReady = true;
+};
+snakeHeadImage.src = "images/head.png";
+
+// Snake body image
 var snakeReady = false;
 var snakeImage = new Image();
 snakeImage.onload = function () {
@@ -181,7 +189,12 @@ function render () {
 	for (var i=0; i <20; i++) {
 		for(var j = 0; j < 20; j++) {
 			if(board[i][j] != 0) { // Rendering only non empty fields
-				if(board[i][j] == -1 || board[i][j] > 0) {
+				if(board[i][j] == -1) {
+					if (snakeHeadReady) {
+						ctx.drawImage(snakeHeadImage, snake.direction * 20, 0, 20, 20, i * 20, j * 20, 20, 20);
+					}
+				}
+				else if(board[i][j] > 0) {
 					if (snakeReady) {
 						ctx.drawImage(snakeImage, i * 20, j * 20);
 					}
