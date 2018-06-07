@@ -59,11 +59,11 @@ var userInput = false; // Flag that prevents multiple direction changes in one c
 addEventListener("keydown", function (e) {
 	if(userInput) {
 		userInput = false;
-		if (e.key == 'Left') { // Player press left
+		if (e.keyCode == 37) { // Player press left
 			if(snake.direction > 0) snake.direction--;
 			else snake.direction = 3;
 		}
-		if (e.key == 'Right') { // Player press right
+		if (e.keyCode == 39) { // Player press right
 			if(snake.direction < 3) snake.direction++;
 			else snake.direction = 0;
 		}
@@ -119,35 +119,37 @@ function update () {
 	var foundHead = false;
 	for (var i=0; i < 20; i++) {
 		for(var j = 0; j < 20; j++) {
-			// Tail update
-			if(board[i][j] == snake.tail) board[i][j] = 0;
-			else if((board[i][j] >= 1) && (board[i][j] < snake.tail)) board[i][j]++;
-			
-			// Head update
-			else if(board[i][j] == -1  && !foundHead) {
-				foundHead = true;
-				switch (checkNext()) {
-					case 1:
-					setApple();
-					applesEaten++;
-					snake.tail++;
-					if((snake.tail % 5) == 0) {
+			if(board[i][j] != 0) { // Checks only non-empty fields
+				// Tail update
+				if(board[i][j] == snake.tail) board[i][j] = 0;
+				else if((board[i][j] >= 1) && (board[i][j] < snake.tail)) board[i][j]++;
+				
+				// Head update
+				else if(board[i][j] == -1  && !foundHead) {
+					foundHead = true;
+					switch (checkNext()) {
+						case 1:
+						setApple();
+						applesEaten++;
+						snake.tail++;
+						if((snake.tail % 5) == 0) {
+							clearInterval(loop);
+							snake.speed /= 1.25;
+							loop = setInterval(main, snake.speed);
+						}
+						case 0:
+						board[snake.x][snake.y] = -1;
+						if(snake.tail > 0) board[i][j] = 1;
+						else board[i][j] = 0;
+						break;					
+						case -1:
 						clearInterval(loop);
-						snake.speed /= 1.25;
-						loop = setInterval(main, snake.speed);
+						clearInterval(mines);
+						end();
+						break;
 					}
-					case 0:
-					board[snake.x][snake.y] = -1;
-					if(snake.tail > 0) board[i][j] = 1;
-					else board[i][j] = 0;
-					break;					
-					case -1:
-					clearInterval(loop);
-					clearInterval(mines);
-					end();
-					break;
 				}
-			}
+			}			
 		}
 	}
 	userInput = true;
@@ -179,21 +181,24 @@ function render () {
 	}
 	for (var i=0; i <20; i++) {
 		for(var j = 0; j < 20; j++) {
-			if(board[i][j] == -1 || board[i][j] > 0) {
-				if (snakeReady) {
-					ctx.drawImage(snakeImage, i * 20, j * 20);
+			if(board[i][j] != 0) { // Rendering only non empty fields
+				if(board[i][j] == -1 || board[i][j] > 0) {
+					if (snakeReady) {
+						ctx.drawImage(snakeImage, i * 20, j * 20);
+					}
+				}
+				else if(board[i][j] == -2) {
+					if (appleReady) {
+						ctx.drawImage(appleImage, i * 20, j * 20);
+					}
+				}
+				else if(board[i][j] == -3) {
+					if (mineReady) {
+						ctx.drawImage(mineImage, i * 20, j * 20);
+					}
 				}
 			}
-			else if(board[i][j] == -2) {
-				if (appleReady) {
-					ctx.drawImage(appleImage, i * 20, j * 20);
-				}
-			}
-			else if(board[i][j] == -3) {
-				if (mineReady) {
-					ctx.drawImage(mineImage, i * 20, j * 20);
-				}
-			}
+			
 		}
 	}	
 
