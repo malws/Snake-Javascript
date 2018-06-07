@@ -106,7 +106,7 @@ function setSnake() {
 };
 
 function setApple () {
-	if (snake.tail > 397) return; // If snake is above 397 long, there is no free space on the board to set an apple
+	if (snake.tail > 397) end(); // If snake is above 397 long, there is no free space on the board to set an apple
 	var x = Math.floor((Math.random() * 20));
 	var y = Math.floor((Math.random() * 20));
 	if(board[x][y] == 0) board[x][y] = -2;
@@ -114,7 +114,7 @@ function setApple () {
 };
 
 function setMine () {
-	if (snake.tail > 397) end();
+	if (snake.tail > 397) return;
 	if(board[mineX][mineY] == -3) board[mineX][mineY] = 0;
 	mineX = Math.floor((Math.random() * 20));
 	mineY = Math.floor((Math.random() * 20));
