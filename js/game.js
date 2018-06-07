@@ -54,21 +54,24 @@ var applesEaten;
 var board;
 
 // Handle keyboard controls
-var keysDown = {};
+var userInput = false; // Flag that prevents multiple direction changes in one cycle (could occur if user not only press, but holds the key down)
 
 addEventListener("keydown", function (e) {
-	if (e.keyCode == 37) { // Player press left
-		if(snake.direction > 0) snake.direction--;
-		else snake.direction = 3;
-	 }
-	 if (e.keyCode == 39) { // Player press right
-		if(snake.direction < 3) snake.direction++;
-		else snake.direction = 0;
-	 }
+	if(userInput) {
+		userInput = false;
+		if (e.key == 'Left') { // Player press left
+			if(snake.direction > 0) snake.direction--;
+			else snake.direction = 3;
+		}
+		if (e.key == 'Right') { // Player press right
+			if(snake.direction < 3) snake.direction++;
+			else snake.direction = 0;
+		}
+	}	
 }, false);
 
 var loop;
-var mines
+var mines;
 
 // Functions
 function init() {
@@ -92,11 +95,11 @@ function setSnake() {
 	snake.y = 0;
 	snake.tail = 0;
 	snake.direction = 0;
-	snake.speed = 200;
+	snake.speed = 300;
 };
 
 function setApple () {
-	if (snake.tail > 397) return; // If snake is above 297 long, there is no free space on the board to set an apple
+	if (snake.tail > 397) return; // If snake is above 397 long, there is no free space on the board to set an apple
 	var x = Math.floor((Math.random() * 20));
 	var y = Math.floor((Math.random() * 20));
 	if(board[x][y] == 0) board[x][y] = -2;
@@ -118,10 +121,10 @@ function update () {
 		for(var j = 0; j < 20; j++) {
 			// Tail update
 			if(board[i][j] == snake.tail) board[i][j] = 0;
-			if((board[i][j] >= 1) && (board[i][j] < snake.tail)) board[i][j]++;
+			else if((board[i][j] >= 1) && (board[i][j] < snake.tail)) board[i][j]++;
 			
 			// Head update
-			if(board[i][j] == -1  && !foundHead) {
+			else if(board[i][j] == -1  && !foundHead) {
 				foundHead = true;
 				switch (checkNext()) {
 					case 1:
@@ -146,7 +149,8 @@ function update () {
 				}
 			}
 		}
-	}	
+	}
+	userInput = true;
 }
 
 function checkNext() {
@@ -180,12 +184,12 @@ function render () {
 					ctx.drawImage(snakeImage, i * 20, j * 20);
 				}
 			}
-			if(board[i][j] == -2) {
+			else if(board[i][j] == -2) {
 				if (appleReady) {
 					ctx.drawImage(appleImage, i * 20, j * 20);
 				}
 			}
-			if(board[i][j] == -3) {
+			else if(board[i][j] == -3) {
 				if (mineReady) {
 					ctx.drawImage(mineImage, i * 20, j * 20);
 				}
