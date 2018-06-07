@@ -114,7 +114,7 @@ function setApple () {
 };
 
 function setMine () {
-	if (snake.tail > 397) return;
+	if (snake.tail > 397) end();
 	if(board[mineX][mineY] == -3) board[mineX][mineY] = 0;
 	mineX = Math.floor((Math.random() * 20));
 	mineY = Math.floor((Math.random() * 20));
@@ -150,8 +150,6 @@ function update () {
 						else board[i][j] = 0;
 						break;					
 						case -1:
-						clearInterval(loop);
-						clearInterval(mines);
 						end();
 						break;
 					}

@@ -6,11 +6,15 @@ body, button {
 	width: 400px;
 	height: 400px;
 	background-image:url('../images/background.png');
+	border: solid 30px #001a00;
+	-webkit-border-image: url('../images/border.png') 50 round; /* Safari 3.1-5 */
+    -o-border-image: url('../images/border.png') 50 round; /* Opera 11-12.1 */
+    border-image: url('../images/border.png') 50 round;
 }
 
 button {
 	position:absolute;
-	left: 145px;
+	left: 175px;
 	width:120px;
 	height:40px;
 	z-index:5;
@@ -25,17 +29,17 @@ button {
 } 
 
 #bstart {
-	top: 150px;
+	top: 170px;
 }
 
 #bscores {
-	top: 200px;
+	top: 220px;
 	display: none;
 }
 
 #name {
 	position:absolute;
-	left: 110px;
+	left: 130px;
 	top: 100px;
 }
 

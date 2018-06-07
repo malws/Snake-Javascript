@@ -53,6 +53,8 @@ function addScore (name, score) {
 	} 
 }
 function end () {
+	clearInterval(loop);
+	clearInterval(mines);
 	document.getElementById("bstart").style.display = "block";
 	document.getElementById("bscores").style.display = "block";
 	var name = document.getElementById("player").value;
