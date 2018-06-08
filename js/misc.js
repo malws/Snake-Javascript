@@ -3,8 +3,8 @@ function showScreen (active, inactive){
 	document.getElementById(inactive).style.display = "block";
 	if (inactive === 'game-screen') {
 		document.getElementById("name").style.display = "none";
-		document.getElementById("bstart").style.display = "none";
-		document.getElementById("bscores").style.display = "none";
+		document.getElementById("bgstart").style.display = "none";
+		document.getElementById("bgscores").style.display = "none";
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		init();
 	}
@@ -22,7 +22,9 @@ function showScreen (active, inactive){
 		}
 		else {
 			document.getElementById("scores").innerHTML = "Sorry, your browser does not support Web Storage...";
-		} 		
+		}
+		document.getElementById("name").style.top = "350px";
+		document.getElementById("name").style.display = "block"; 		
 	}
 }
 
@@ -55,8 +57,8 @@ function addScore (name, score) {
 function end () {
 	clearInterval(loop);
 	clearInterval(mines);
-	document.getElementById("bstart").style.display = "block";
-	document.getElementById("bscores").style.display = "block";
+	document.getElementById("bgstart").style.display = "block";
+	document.getElementById("bgscores").style.display = "block";
 	var name = document.getElementById("player").value;
 	addScore(name, applesEaten);
 }

@@ -8,17 +8,19 @@
 	</head>
 	<body>
 		<div id="game">			
-			<div class="screen" id="game-screen"  class="active">
-				<p id="name"><label for="player">Name: </label>
+			<p id="name"><label for="player">Name: </label>
 				<input type="text" id="player" value="snake" maxlength="9"></p>
-				<button id="bstart" onclick="showScreen('game-screen', 'game-screen')"><span>Start!</span></button>
-				<button id="bscores" onclick="showScreen('game-screen', 'high-scores')"><span>High scores</span></button>
+			<div class="screen" id="start-screen"  class="active">
+				<button id="bstart" onclick="showScreen('start-screen', 'game-screen')"><span>Start!</span></button>
 			</div>
-				
+			<div class="screen" id="game-screen"  class="inactive" style="display:none">
+				<button id="bgstart" onclick="showScreen('game-screen', 'game-screen')"><span>Restart!</span></button>
+				<button id="bgscores" onclick="showScreen('game-screen', 'high-scores')"><span>High scores</span></button>
+			</div>				
 			<div class="screen" id="high-scores" class="inactive" style="display:none">
 				<div id="scores">
-				<table id="scorestable"><caption>Highs scores</caption><tbody id="tablecont"></tbody></table></div>
-				<button onclick="showScreen('high-scores', 'game-screen')"><span>Play again</span></button>
+				<table id="scorestable"><caption>High scores</caption><tbody id="tablecont"></tbody></table></div>
+				<button id="pagain" onclick="showScreen('high-scores', 'game-screen')"><span>Play again</span></button>
 			</div>
 			
 			<script src="js/misc.js"></script>

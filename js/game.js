@@ -63,18 +63,38 @@ var board;
 
 // Handle keyboard controls
 var userInput = false; // Flag that prevents multiple direction changes in one cycle (could occur if user not only press, but holds the key down)
+var paused = false;
 
 addEventListener("keydown", function (e) {
-	if (e.keyCode == 37 && userInput) { // Player press left
+	if (e.keyCode == 37 && userInput && !paused) { // Player press left
 		userInput = false;
-		if(snake.direction > 0) snake.direction--;
-		else snake.direction = 3;
+		if (snake.direction != 3) snake.direction = 1;
 	}
-	if (e.keyCode == 39 && userInput) { // Player press right
+	if (e.keyCode == 38 && userInput && !paused) { // Player press up
 		userInput = false;
-		if(snake.direction < 3) snake.direction++;
-		else snake.direction = 0;
+		if (snake.direction != 0) snake.direction = 2;
+	}
+	if (e.keyCode == 39 && userInput && !paused) { // Player press right
+		userInput = false;
+		if (snake.direction != 1) snake.direction = 3;
 	}	
+	if (e.keyCode == 40 && userInput && !paused) { // Player press down
+		userInput = false;
+		if (snake.direction != 2) snake.direction = 0;
+	}
+	if (e.keyCode == 32) { // Player press space
+		if (paused) {
+			paused = false;
+			loop = setInterval(main, snake.speed);
+		}
+		else {
+			paused = true;
+			clearInterval(loop);
+			ctx.fillStyle = "rgb(250, 250, 250)";
+			ctx.font = "50px Verdana";
+			ctx.fillText("||", 180, 170);
+		}
+	}
 }, false);
 
 var loop;
@@ -132,7 +152,7 @@ function update () {
 				else if((board[i][j] >= 1) && (board[i][j] < snake.tail)) board[i][j]++;
 				
 				// Head update
-				else if(board[i][j] == -1  && !foundHead) {
+				if(board[i][j] == -1  && !foundHead) {
 					foundHead = true;
 					switch (checkNext()) {
 						case 1:
