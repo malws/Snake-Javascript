@@ -60,5 +60,5 @@ function end () {
 	document.getElementById("bgstart").style.display = "block";
 	document.getElementById("bgscores").style.display = "block";
 	var name = document.getElementById("player").value;
-	addScore(name, applesEaten);
+	if (applesEaten > 0) addScore(name, applesEaten);
 }
