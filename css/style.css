@@ -44,6 +44,11 @@ button {
 	display: none;
 }
 
+#bgquit {
+	top: 260px;
+	display: none;
+}
+
 #pagain {
 	position: absolute;
 	top: 370px;
@@ -53,6 +58,10 @@ button {
 	position:absolute;
 	left: 130px;
 	top: 100px;
+}
+
+#game-screen, #high-scores {
+	display:none;
 }
 
 #high-scores {

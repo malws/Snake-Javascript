@@ -1,7 +1,13 @@
 function showScreen (active, inactive){
 	document.getElementById(active).style.display = "none";
 	document.getElementById(inactive).style.display = "block";
+	if (inactive === 'start-screen') {
+		end();
+		document.getElementById("name").style.top = "100px";
+		document.getElementById("name").style.display = "block";
+	}
 	if (inactive === 'game-screen') {
+		document.getElementById("bgquit").style.display = "none";
 		document.getElementById("name").style.display = "none";
 		document.getElementById("bgstart").style.display = "none";
 		document.getElementById("bgscores").style.display = "none";
@@ -51,7 +57,7 @@ function addScore (name, score) {
 		}
 		window.localStorage.setItem("hss", JSON.stringify(hs));
 	} catch (e) {
-		document.getElementById("scores").innerHTML = "Sorry, your browser does not support Web Storage...";
+		document.getElementById("scores").innerHTML = "Sorry, your browser does not support LocalStorage...";
 	}
 }
 function end () {

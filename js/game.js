@@ -62,8 +62,8 @@ var applesEaten;
 var board;
 
 // Handle keyboard controls
-var userInput = false; // Flag that prevents multiple direction changes in one cycle (could occur if user not only press, but holds the key down)
-var paused = false;
+var userInput; // Flag that prevents multiple direction changes in one cycle (could occur if user not only press, but holds the key down)
+var paused;
 
 addEventListener("keydown", function (e) {
 	if (e.keyCode == 37 && userInput && !paused) { // Player press left
@@ -82,17 +82,19 @@ addEventListener("keydown", function (e) {
 		userInput = false;
 		if (snake.direction != 2) snake.direction = 0;
 	}
-	if (e.keyCode == 32) { // Player press space
+	if (e.keyCode == 32 && userInput) { // Player press space
 		if (paused) {
 			paused = false;
 			loop = setInterval(main, snake.speed);
+			document.getElementById("bgquit").style.display = "none";
 		}
 		else {
 			paused = true;
 			clearInterval(loop);
 			ctx.fillStyle = "rgb(250, 250, 250)";
 			ctx.font = "50px Verdana";
-			ctx.fillText("||", 180, 170);
+			ctx.fillText("||", 175, 150);
+			document.getElementById("bgquit").style.display = "block";
 		}
 	}
 }, false);
@@ -109,6 +111,8 @@ function init() {
 			board[i][j] = 0;
 		}
 	}
+	userInput = false; // Flag that prevents multiple direction changes in one cycle (could occur if user not only press, but holds the key down)
+	paused = false;
 	applesEaten = 0;
 	setSnake();
 	setApple();

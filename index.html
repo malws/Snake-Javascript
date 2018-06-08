@@ -10,15 +10,16 @@
 		<div id="game">			
 			<p id="name"><label for="player">Name: </label>
 				<input type="text" id="player" value="snake" maxlength="9"></p>
-			<div class="screen" id="start-screen"  class="active">
+			<div id="start-screen"  class="active">
 				<button id="bstart" onclick="showScreen('start-screen', 'game-screen')"><span>Start!</span></button>
 				<span id="controls"><p>use arrows to move the snake</p><p>press space to pause the game</p></span>
 			</div>
-			<div class="screen" id="game-screen"  class="inactive" style="display:none">
+			<div id="game-screen"  class="inactive">
 				<button id="bgstart" onclick="showScreen('game-screen', 'game-screen')"><span>Restart!</span></button>
 				<button id="bgscores" onclick="showScreen('game-screen', 'high-scores')"><span>High scores</span></button>
+				<button id="bgquit" onclick="showScreen('game-screen', 'start-screen')"><span>Quit game</span></button>
 			</div>				
-			<div class="screen" id="high-scores" class="inactive" style="display:none">
+			<div id="high-scores" class="inactive">
 				<div id="scores">
 				<table id="scorestable"><caption>High scores</caption><tbody id="tablecont"></tbody></table></div>
 				<button id="pagain" onclick="showScreen('high-scores', 'game-screen')"><span>Play again</span></button>
