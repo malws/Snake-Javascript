@@ -12,6 +12,14 @@ body, button {
     border-image: url('../images/border.png') 50 round;
 }
 
+#controls {
+	position:absolute;
+	left: 150px;
+	top: 240px;
+	font-size: 10px;
+	line-height:10px;
+}
+
 button {
 	position:absolute;
 	left: 175px;
