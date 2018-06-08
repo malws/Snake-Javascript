@@ -30,9 +30,9 @@ function addScore (name, score) {
 	var hs = new Array();
 	var newscore = {"name": name, "score": applesEaten};
 	// Check browser support
-	if (typeof(Storage) !== "undefined") {
-    // Store
-		if (localStorage.getItem("hss") === null) {
+	try {
+		// Store
+		if (window.localStorage.getItem("hss") === null) {
 			hs.push(newscore);
 		}
 		else {
@@ -48,9 +48,9 @@ function addScore (name, score) {
 			}
 		}
 		window.localStorage.setItem("hss", JSON.stringify(hs));
-	} else {
+	} catch (e) {
 		document.getElementById("scores").innerHTML = "Sorry, your browser does not support Web Storage...";
-	} 
+	}
 }
 function end () {
 	clearInterval(loop);
