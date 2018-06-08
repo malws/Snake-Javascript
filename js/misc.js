@@ -23,7 +23,7 @@ function showScreen (active, inactive){
 		else {
 			document.getElementById("scores").innerHTML = "Sorry, your browser does not support Web Storage...";
 		}
-		document.getElementById("name").style.top = "350px";
+		document.getElementById("name").style.top = "310px";
 		document.getElementById("name").style.display = "block"; 		
 	}
 }
@@ -43,9 +43,9 @@ function addScore (name, score) {
 			hs.push(newscore);
 		}
 		hs.sort(function(a,b) {return (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0);});
-		if(hs.length > 10)
+		if(hs.length > 5)
 		{
-			for(var j = hs.length; j > 10; j--){
+			for(var j = hs.length; j > 5; j--){
 				hs.pop();
 			}
 		}

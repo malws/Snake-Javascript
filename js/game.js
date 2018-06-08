@@ -170,14 +170,14 @@ function update () {
 						else board[i][j] = 0;
 						break;					
 						case -1:
-						end();
-						break;
+						return false;
 					}
 				}
 			}			
 		}
 	}
 	userInput = true;
+	return true;
 }
 
 function checkNext() {
@@ -241,6 +241,6 @@ function render () {
 };
 
 var main = function () {
-	update();
-	render();
+	if (update()) render();
+	else end();
 };
