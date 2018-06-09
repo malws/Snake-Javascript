@@ -83,18 +83,20 @@ addEventListener("keydown", function (e) {
 		if (snake.direction != 2) snake.direction = 0;
 	}
 	if (e.keyCode == 32 && userInput) { // Player press space
-		if (paused) {
+		if (paused && loop == null) {
 			paused = false;
 			loop = setInterval(main, snake.speed);
+			render();
 			document.getElementById("bgquit").style.display = "none";
 		}
-		else {
+		else if (loop != null) {
 			paused = true;
 			clearInterval(loop);
+			loop = null;
 			ctx.fillStyle = "rgb(250, 250, 250)";
 			ctx.font = "50px Verdana";
 			ctx.fillText("||", 175, 150);
-			document.getElementById("bgquit").style.display = "block";
+			document.getElementById("bgquit").style.display = "block";	
 		}
 	}
 }, false);

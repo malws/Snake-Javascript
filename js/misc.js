@@ -63,6 +63,7 @@ function addScore (name, score) {
 function end () {
 	clearInterval(loop);
 	clearInterval(mines);
+	loop = null;
 	document.getElementById("bgstart").style.display = "block";
 	document.getElementById("bgscores").style.display = "block";
 	var name = document.getElementById("player").value;
